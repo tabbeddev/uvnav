@@ -12,7 +12,7 @@ export function sortResultsBySimplest(
   results: Navigation.NavigationResult[]
 ): typeof results {
   return results.toSorted((a, b) => {
-    return a.path.length - b.path.length;
+    return compactItinerary(a.steps).length - compactItinerary(b.steps).length;
   });
 }
 
@@ -29,8 +29,6 @@ export function findAllRoutes(
   end: string,
   options: Navigation.FindOptions = {}
 ): Navigation.NavigationResult[] {
-  // FIXME: Router only drives one stop with each method before having to use another method
-
   function calcSpeedFactor(transfer: Map.Transfer): number {
     switch (transfer) {
       case "railway":
