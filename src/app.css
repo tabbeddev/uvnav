@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+body {
+	background: radial-gradient(
+		circle,
+		rgba(172, 183, 203, 1) 35%,
+		rgba(204, 221, 250, 1) 100%
+	);
+	background-attachment: fixed;
+	min-height: 100vh;
+}
+
+hr {
+	margin: revert;
+}
+
+input[type="text"], select {
+	border: solid 2px #d1d5dc;
+	background-color: rgba(229, 231, 235, 0.5);
+	border-radius: 4px;
+	margin: 4px 0;
+}
+
+button {
+	border: solid 2px #d1d5dc;
+	background-color: rgba(229, 231, 235, 0.5);
+	border-radius: 4px;
+	margin: 4px 0;
+	padding: 2px 8px;
+}
+
+.blurry-box {
+	background-color: rgba(209, 213, 220, 0.35);
+	backdrop-filter: blur(4px);
+	padding: 1rem;
+	border-radius: 4px;
+}
