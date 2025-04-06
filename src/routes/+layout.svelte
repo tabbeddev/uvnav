@@ -38,6 +38,12 @@
   });
 </script>
 
+<svelte:head>
+	<meta property="og:title" content="UltraVanilla Navigator Project">
+	<meta property="description" content="The useful UltraVanilla Router">
+	<meta property="og:description" content="The useful UltraVanilla Router">
+</svelte:head>
+
 {@render children()}
 
 <nav

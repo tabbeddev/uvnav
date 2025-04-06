@@ -61,6 +61,10 @@
   const connectionString = params.get("connection");
 </script>
 
+<svelte:head>
+	<title>Route | UVNAV | UV Navigator</title>
+</svelte:head>
+
 {#if connectionString}
   {@const connection = parse(connectionString)}
   {@const bounding = calculateMapBounding(connection.path)}
