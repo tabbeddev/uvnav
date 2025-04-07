@@ -1,5 +1,5 @@
 export function secondStringify(e: number): string {
-	if (e === 0) return "Instant"
+  if (e === 0) return "Instant";
   const t = Math.floor(e / 60),
     n = e % 60;
   let o;

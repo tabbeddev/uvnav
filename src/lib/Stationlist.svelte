@@ -1,6 +1,6 @@
 <script lang="ts">
   import network from "../network";
-	const t = "\u2063"
+  const t = "\u2063";
 </script>
 
 <datalist id="stationlist">

@@ -148,7 +148,7 @@
     </div>
   </div>
 {:else}
-  <div class="absolute left-1/2 top-1/4 -translate-x-1/2 blurry-box shadow-2xl">
+  <div class="absolute left-1/2 top-12 -translate-x-1/2 blurry-box shadow-2xl">
     <h1 class="text-3xl font-bold">That's not a route!</h1>
     <h2 class="text-lg">
       This URL is not valid.<br />Please go back and search again

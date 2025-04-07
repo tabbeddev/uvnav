@@ -120,7 +120,12 @@
   });
 </script>
 
-<canvas id="map" width={dx * pixelsPerTile} height={dz * pixelsPerTile} class="border-gray-300 rounded-xl border-4">
+<canvas
+  id="map"
+  width={dx * pixelsPerTile}
+  height={dz * pixelsPerTile}
+  class="border-gray-300 rounded-xl border-4"
+>
 </canvas>
 {#if canvas}
   {#each markers as marker}

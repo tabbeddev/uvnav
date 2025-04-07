@@ -4,7 +4,7 @@
   import start from "$lib/icons/map-pin.svg";
   import stop from "$lib/icons/house.svg";
   import { goto } from "$app/navigation";
-	import { booleansToNumber } from "$lib/booltils";
+  import { booleansToNumber } from "$lib/booltils";
 
   let returnMSG: string = $state("");
 
@@ -29,14 +29,14 @@
 
     // @ts-ignore
     const params: boolean[] = [
-			!data.get("warp"),
-			!data.get("iceway"),
-			!data.get("pistonbolt"),
-			!data.get("railway"),
-			!data.get("boatway"),
-			!data.get("street"),
-			!data.get("walk"),
-		]
+      !data.get("warp"),
+      !data.get("iceway"),
+      !data.get("pistonbolt"),
+      !data.get("railway"),
+      !data.get("boatway"),
+      !data.get("street"),
+      !data.get("walk"),
+    ];
 
     goto(
       `/search?start=${startStation.substring(0, startStation.length - 1)}&dest=${destinationStation.substring(0, destinationStation.length - 1)}&searchparams=${booleansToNumber(params)}`
