@@ -72,13 +72,13 @@
   <div class="absolute left-1/2 top-12 -translate-x-1/2 flex gap-4">
     <div class="blurry-box shadow-2xl min-w-[25vw] h-fit">
       <h1 class="font-bold text-xl">Itinerary:</h1>
-      <h2 class="font-medium text-lg">
+      <h2 class="text-lg">
         From {connection.path[0]} → {connection.path[
           connection.path.length - 1
         ]}
       </h2>
-      <p>Total Distance: {connection.totalDistance}</p>
-      <p>Total Travel time: {secondStringify(connection.totalTime)}</p>
+      <p class="font-light">Total Distance: {connection.totalDistance} blocks</p>
+      <p class="font-light">Total Travel time: {secondStringify(connection.totalTime)}</p>
       <hr />
       {#each itinerary as step, index}
         <div

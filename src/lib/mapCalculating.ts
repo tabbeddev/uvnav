@@ -10,28 +10,15 @@ export function calculateDeltaMap(
   dz: number;
   x: number;
   z: number;
-  xEnd: number;
-  zEnd: number;
 } {
-  if (endX < startX) {
-    const tempX = endX;
-    endX = startX;
-    startX = tempX;
-  }
-
-  if (endZ < startZ) {
-    const tempX = endX;
-    endX = startX;
-    startX = tempX;
-  }
+  [endX, startX] = [startX, endX].toSorted();
+  [endZ, startZ] = [startZ, endZ].toSorted();
 
   return {
     dx: Math.ceil((endX - startX) / 1024),
     dz: Math.ceil((endZ - startZ) / 1024),
     x: Math.floor(startX / 1024) * 1024,
     z: Math.floor(startZ / 1024) * 1024,
-    xEnd: Math.ceil(endX / 1024) * 1024,
-    zEnd: Math.ceil(endZ / 1024) * 1024,
   };
 }
 
