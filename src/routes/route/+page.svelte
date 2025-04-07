@@ -67,6 +67,7 @@
 
 {#if connectionString}
   {@const connection = parse(connectionString)}
+  {@const itinerary = compactItinerary(connection.steps)}
   {@const bounding = calculateMapBounding(connection.path)}
   <div class="absolute left-1/2 top-12 -translate-x-1/2 flex gap-4">
     <div class="blurry-box shadow-2xl min-w-[25vw] h-fit">
@@ -79,7 +80,7 @@
       <p>Total Distance: {connection.totalDistance}</p>
       <p>Total Travel time: {secondStringify(connection.totalTime)}</p>
       <hr />
-      {#each compactItinerary(connection.steps) as step, index}
+      {#each itinerary as step, index}
         <div
           class="border-l-4 pl-2 py-1.5"
           style={`border-color: ${getHexColorByConnectionType(step.transfer)}; border-style: ${getLineTypeByConnectionType(step.transfer)}`}
@@ -114,7 +115,7 @@
             Travel time: {secondStringify(step.time)}
           </p>
         </div>
-        {#if index !== connection.steps.length - 1}
+        {#if index !== itinerary.length - 1}
           <div
             class="border-l-4 pl-2 border-dotted border-gray-500 flex py-3 rounded-r-sm bg-gray-400"
           >
