@@ -42,6 +42,18 @@
       `/search?start=${startStation.substring(0, startStation.length - 1)}&dest=${destinationStation.substring(0, destinationStation.length - 1)}&searchparams=${booleansToNumber(params)}`
     );
   }
+
+  function searchStation(e: SubmitEvent) {
+    e.preventDefault();
+    const data = new FormData(e.target as HTMLFormElement);
+    const station = data.get("station") as string;
+
+    if (!station.endsWith("\u2063")) {
+      return (returnMSG = "Please select a valid station");
+    }
+
+    goto("/station?station=" + station.substring(0, station.length - 1));
+  }
 </script>
 
 <svelte:head>
@@ -62,8 +74,8 @@
     </h2>
   </div>
 
-  <div class="blurry-box shadow-xl">
-    <p class="text-xl">Search:</p>
+  <div class="blurry-box shadow-xl mb-4">
+    <p class="text-xl">Search for route:</p>
     <form onsubmit={search}>
       <table>
         <tbody>
@@ -112,6 +124,24 @@
         </label>
       {/each}
       <p class="text-red-900">{returnMSG}</p>
+      <button type="submit" class="shadow-md">Search</button>
+    </form>
+  </div>
+
+  <div class="blurry-box shadow-xl">
+    <p class="text-xl">Search for town / station:</p>
+    <form onsubmit={searchStation}>
+      <label class="font-light flex gap-0.5 items-center">
+        <img src={stop} alt="Station" />
+        Station:
+        <input
+          name="station"
+          type="text"
+          list="stationlist"
+          class="ml-0.5! shadow-md w-full"
+          placeholder="Search for a station / town here..."
+        />
+      </label>
       <button type="submit" class="shadow-md">Search</button>
     </form>
   </div>

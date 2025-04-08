@@ -1,4 +1,5 @@
 import network from "../network";
+import { calcSpeedFactor } from "./minecraftLib";
 
 export function sortResultsByShortest(
   results: Navigation.NavigationResult[]
@@ -29,27 +30,6 @@ export function findAllRoutes(
   end: string,
   options: Navigation.FindOptions = {}
 ): Navigation.NavigationResult[] {
-  function calcSpeedFactor(transfer: Map.Transfer): number {
-    switch (transfer) {
-      case "railway":
-      case "boatway":
-      case "street":
-        return 8;
-
-      case "iceway":
-        return 70;
-
-      case "pistonbolt":
-        return 50;
-
-      case "warp":
-        return 0;
-
-      case "walk":
-        return 6.5;
-    }
-  }
-
   const results: Navigation.NavigationResult[] = [];
   const visited = new Set<string>();
   const avoid = new Set(options.avoid || []);

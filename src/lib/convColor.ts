@@ -17,6 +17,10 @@ export function getBGColorByStationType(type: Map.Marker["type"]): string {
       return "bg-green-300";
     case "drive-by":
       return "bg-yellow-300";
+    case "place":
+      return "bg-gray-300";
+    case "connection":
+      return "bg-cyan-200";
   }
 }
 

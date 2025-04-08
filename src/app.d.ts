@@ -17,7 +17,7 @@ declare global {
     interface Marker {
       x: number;
       z: number;
-      type: "start" | "stop" | "change" | "drive-by";
+      type: "start" | "stop" | "change" | "drive-by" | "place" | "connection";
       text: string;
       subtext?: string;
       url?: string;

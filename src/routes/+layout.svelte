@@ -44,6 +44,23 @@
   <meta property="og:description" content="The useful UltraVanilla Router" />
 </svelte:head>
 
+<footer class="fixed left-1/2 bottom-0 -translate-x-1/2 w-max opacity-40">
+  <p class="text-center">
+    This site is not associated with the higher ups at UltraVanilla, nor Mojang
+    AB or Microsoft Inc. <br />
+    All in-game towns, groups, or other locations mentioned are also their own legal
+    entity and reserve the right to ask to be added or removed from this page.
+    <br />
+    Please open a Github issue or contact tabbedDev in-game or on Discord to for
+    removal/addition requests. Most locations have been added automatically.
+    <br />
+    Also, this site is
+    <a class="text-blue-900" href="https://github.com/tabbeddev/uvnav"
+      >open-source</a
+    >.
+  </p>
+</footer>
+
 {@render children()}
 
 <nav

@@ -14,17 +14,23 @@
   import { calculateMapBounding } from "$lib/mapCalculating";
   import { compactItinerary } from "$lib/route";
   import { secondStringify } from "$lib/timeLib";
+  import { assembleDynmapLink } from "$lib/minecraftLib";
 
   function parse(str: string): Navigation.NavigationResult {
     return JSON.parse(str);
   }
 
-  function listMarkers(connection: Navigation.NavigationResult): Map.Marker[] {
-    const a: Map.Marker[] = [];
+  function* listMarkers(connection: Navigation.NavigationResult) {
     for (const [i, stop] of connection.steps.entries()) {
       if (i === connection.steps.length - 1) {
         const [x, z] = network.places[stop.to].coordinates;
-        a.push({ x, z, text: stop.to, type: "stop" });
+        yield {
+          x,
+          z,
+          text: stop.to,
+          type: "stop",
+          url: "/station?station=" + stop.to,
+        } as Map.Marker;
       }
       const [x, z] = network.places[stop.from].coordinates;
 
@@ -34,27 +40,29 @@
           : JSON.stringify(stop.methodNames) ===
             JSON.stringify(connection.steps[i - 1].methodNames);
 
-      a.push({
+      yield {
         x,
         z,
         text: stop.from,
         type: i === 0 ? "start" : isDriveBy ? "drive-by" : "change",
         subtext: stop.methodNames.join(" / "),
-      });
+        url: "/station?station=" + stop.from,
+      } as Map.Marker;
     }
-    return a.toReversed();
   }
 
-  function listLines(
-    connection: Navigation.NavigationResult
-  ): Map.ConnectedLine[] {
-    const a: Map.ConnectedLine[] = [];
+  function* listLines(connection: Navigation.NavigationResult) {
     for (const stop of connection.steps) {
       const [startX, startZ] = network.places[stop.from].coordinates;
       const [endX, endZ] = network.places[stop.to].coordinates;
-      a.push({ startX, startZ, endX, endZ, type: stop.transfer });
+      yield {
+        startX,
+        startZ,
+        endX,
+        endZ,
+        type: stop.transfer,
+      } as Map.ConnectedLine;
     }
-    return a;
   }
 
   const params = new URLSearchParams(location.search);
@@ -62,7 +70,7 @@
 </script>
 
 <svelte:head>
-	<title>Route | UVNAV | UV Navigator</title>
+  <title>Route | UVNAV | UV Navigator</title>
 </svelte:head>
 
 {#if connectionString}
@@ -77,20 +85,28 @@
           connection.path.length - 1
         ]}
       </h2>
-      <p class="font-light">Total Distance: {connection.totalDistance} blocks</p>
-      <p class="font-light">Total Travel time: {secondStringify(connection.totalTime)}</p>
+      <p class="font-light">
+        Total Distance: {connection.totalDistance} blocks
+      </p>
+      <p class="font-light">
+        Total Travel time: {secondStringify(connection.totalTime)}
+      </p>
       <hr />
       {#each itinerary as step, index}
         <div
           class="border-l-4 pl-2 py-1.5"
           style={`border-color: ${getHexColorByConnectionType(step.transfer)}; border-style: ${getLineTypeByConnectionType(step.transfer)}`}
         >
-          <p class="text-xl font-semibold flex my-2 gap-1">
+          <a
+            class="text-xl font-semibold flex my-2 gap-1 text-blue-900"
+            href={"/station?station=" + step.from}
+            target="_blank"
+          >
             <img src={index === 0 ? start : pin} />
             {step.from}
-          </p>
+          </a>
           <p
-            class="rounded-sm w-fit p-1 my-1 gap-1 backdrop-brightness-50 flex items-center"
+            class="rounded-sm w-fit p-1 my-1 gap-1 backdrop-brightness-50 flex items-center shadow-md"
             style:background-color={getHexColorByConnectionType(step.transfer)}
             title={step.transfer}
           >
@@ -103,10 +119,14 @@
           <p class="text-sm">
             Operator: {network.operators[step.methodNames[0]]}
           </p>
-          <p class="text-xl font-semibold flex mt-2 gap-1">
+          <a
+            class="text-xl font-semibold flex my-2 gap-1 text-blue-900"
+            href={"/station?station=" + step.to}
+            target="_blank"
+          >
             <img src={index === connection.steps.length - 1 ? dest : pin} />
             {step.to}
-          </p>
+          </a>
           <hr />
           {#if step.distance > 0}
             <p>Distance: {step.distance} blocks</p>
@@ -141,8 +161,8 @@
           z1={bounding.startZ}
           x2={bounding.endX}
           z2={bounding.endZ}
-          markers={listMarkers(connection)}
-          lines={listLines(connection)}
+          markers={listMarkers(connection).toArray().toReversed()}
+          lines={listLines(connection).toArray()}
         />
       {/if}
     </div>

@@ -5,6 +5,7 @@
   import change from "$lib/icons/change.svg";
   import drive_by from "$lib/icons/drive-by.svg";
   import leave from "$lib/icons/leave.svg";
+  import pin from "$lib/icons/map-pin.svg";
   import {
     getBGColorByStationType,
     getHexColorByConnectionType,
@@ -16,21 +17,21 @@
     z1,
     x2,
     z2,
-    markers,
-    lines,
+    markers = [],
+    lines = [],
   }: {
     x1: number;
     z1: number;
     x2: number;
     z2: number;
-    markers: Map.Marker[];
-    lines: Map.ConnectedLine[];
+    markers?: Map.Marker[];
+    lines?: Map.ConnectedLine[];
   } = $props();
 
   const tileSize = 1024;
   const pixelsPerTile = 128;
 
-  const { dx, dz, x, z, xEnd, zEnd } = calculateDeltaMap(x1, z1, x2, z2);
+  const { dx, dz, x, z } = calculateDeltaMap(x1, z1, x2, z2);
 
   // @ts-ignore
   let canvas: HTMLCanvasElement = $state();
@@ -41,8 +42,11 @@
   let maxTiles: number = 0;
 
   function getClientCoords(pos_x: number, pos_z: number): [number, number] {
-    const posX = convXToPixel(pos_x);
-    const posZ = convZToPixel(pos_z) + 34;
+    if (!canvas.parentElement) return [0, 0];
+    const rect = canvas.getBoundingClientRect();
+    const parent = canvas.parentElement.getBoundingClientRect();
+    const posX = Math.round(rect.x - parent.x + convXToPixel(pos_x) - 8);
+    const posZ = Math.round(rect.y - parent.y + convZToPixel(pos_z) - 8);
     return [posX, posZ];
   }
 
@@ -124,7 +128,7 @@
   id="map"
   width={dx * pixelsPerTile}
   height={dz * pixelsPerTile}
-  class="border-gray-300 rounded-xl border-4"
+  class="border-gray-300 rounded-xl border-4 shadow-xl"
 >
 </canvas>
 {#if canvas}
@@ -162,10 +166,23 @@
           <strong>Drive by:</strong><br />{marker.text}
         </span>
         <img src={drive_by} alt="Drive By" />
+      {:else if marker.type === "place"}
+        <p class="tooltip-text font-bold">{marker.text}</p>
+        <img src={pin} alt="Place" />
+      {:else if marker.type === "connection"}
+        <span class="tooltip-text">
+          <strong>Connects to:</strong><br />{marker.text}<br />
+          <strong>via</strong>
+          {marker.subtext}
+        </span>
+        <img src={drive_by} alt="Connection" />
       {/if}
     </a>
   {/each}
 {/if}
+<p class="font-light">
+  Data from: <a href="https://ultravanilla.world" class="text-blue-900">https://ultravanilla.world/</a> (UltraVanilla - Dynmap)
+</p>
 
 <style>
   .tooltip .tooltip-text {
