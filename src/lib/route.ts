@@ -2,7 +2,7 @@ import network from "../network";
 import { calcSpeedFactor } from "./minecraftLib";
 
 export function sortResultsByShortest(
-  results: Navigation.NavigationResult[]
+  results: Navigation.NavigationResult[],
 ): typeof results {
   return results.toSorted((a, b) => {
     return a.totalDistance - b.totalDistance;
@@ -10,7 +10,7 @@ export function sortResultsByShortest(
 }
 
 export function sortResultsBySimplest(
-  results: Navigation.NavigationResult[]
+  results: Navigation.NavigationResult[],
 ): typeof results {
   return results.toSorted((a, b) => {
     return compactItinerary(a.steps).length - compactItinerary(b.steps).length;
@@ -18,7 +18,7 @@ export function sortResultsBySimplest(
 }
 
 export function sortResultsByFastes(
-  results: Navigation.NavigationResult[]
+  results: Navigation.NavigationResult[],
 ): typeof results {
   return results.toSorted((a, b) => {
     return a.totalTime - b.totalTime;
@@ -28,7 +28,7 @@ export function sortResultsByFastes(
 export function findAllRoutes(
   start: string,
   end: string,
-  options: Navigation.FindOptions = {}
+  options: Navigation.FindOptions = {},
 ): Navigation.NavigationResult[] {
   const results: Navigation.NavigationResult[] = [];
   const visited = new Set<string>();
@@ -48,10 +48,9 @@ export function findAllRoutes(
   dfs(start, [], 0, [], new Set<string>(), new Set<string>());
 
   // Warps (only at start)
-  const warpStarts =
-    network.warps?.filter(
-      (w) => w !== start && Object.keys(network.places).includes(w)
-    ) ?? [];
+  const warpStarts = network.warps?.filter(
+    (w) => w !== start && Object.keys(network.places).includes(w),
+  ) ?? [];
 
   if (!options.avoid?.includes("warp")) {
     for (const initialStart of warpStarts) {
@@ -70,7 +69,7 @@ export function findAllRoutes(
           },
         ],
         new Set<string>(),
-        new Set<string>()
+        new Set<string>(),
       );
     }
   }
@@ -81,7 +80,7 @@ export function findAllRoutes(
     distance: number,
     steps: Navigation.NavigationResult["steps"],
     usedGroupedMethods: Set<string>,
-    currentMethodGroup: Set<string> | null
+    currentMethodGroup: Set<string> | null,
   ) {
     if (visited.has(current)) return;
     visited.add(current);
@@ -95,7 +94,7 @@ export function findAllRoutes(
         totalTime: Math.round(
           steps.reduce((pre, cur) => {
             return pre + cur.time;
-          }, 0)
+          }, 0),
         ),
       });
       visited.delete(current);
@@ -108,10 +107,12 @@ export function findAllRoutes(
       return;
     }
 
-    for (const [transfer, routes] of Object.entries(place.methods) as [
-      Map.Transfer,
-      Navigation.Routes
-    ][]) {
+    for (
+      const [transfer, routes] of Object.entries(place.methods) as [
+        Map.Transfer,
+        Navigation.Routes,
+      ][]
+    ) {
       if (avoid.has(transfer)) continue;
 
       for (const [neighbor, route] of Object.entries(routes)) {
@@ -134,8 +135,8 @@ export function findAllRoutes(
           continue;
         }
 
-        const changedGroup =
-          currentMethodGroup && routeGroup && currentMethodGroup !== routeGroup;
+        const changedGroup = currentMethodGroup && routeGroup &&
+          currentMethodGroup !== routeGroup;
 
         // Neue Kopien für Rekursion
         const newUsedGroupedMethods = new Set(usedGroupedMethods);
@@ -167,7 +168,7 @@ export function findAllRoutes(
             },
           ],
           newUsedGroupedMethods,
-          newCurrentGroup
+          newCurrentGroup,
         );
       }
     }
@@ -179,7 +180,7 @@ export function findAllRoutes(
 }
 
 export function compactItinerary(
-  route: Navigation.NavigationResult["steps"]
+  route: Navigation.NavigationResult["steps"],
 ): typeof route {
   const newSteps: typeof route = [];
   let startStation: string | null = null;

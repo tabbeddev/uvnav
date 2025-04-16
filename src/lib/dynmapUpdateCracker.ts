@@ -1,7 +1,7 @@
 export async function getUpdate(): Promise<DynmapPing> {
   const time = Date.now();
   const res = await fetch(
-    "https://ultravanilla.world/up-binary/world/world/" + time
+    "https://ultravanilla.world/up-binary/world/world/" + time,
   );
   if (!res.ok) throw new Error("Could not fetch dynmap binary world");
 
@@ -130,7 +130,7 @@ type DynmapUpdate =
 
 async function getDictionary(time: number): Promise<string[]> {
   const res = await fetch(
-    "https://ultravanilla.world/up-dictionary/world/world/" + time
+    "https://ultravanilla.world/up-dictionary/world/world/" + time,
   );
   if (!res.ok) throw new Error("Could not fetch dynmap dictionary world");
 
@@ -236,7 +236,9 @@ function decode(buf: Uint8Array, knownStrings: string[] = []): DynmapPing {
         const zoomString = zoom === 0 ? "" : "z".repeat(zoom) + "_";
         const name = strings[templateId].replace(
           "!",
-          `/${Math.floor(x / 32)}_${Math.floor(y / 32)}/${zoomString}${x}_${y}.`
+          `/${Math.floor(x / 32)}_${
+            Math.floor(y / 32)
+          }/${zoomString}${x}_${y}.`,
         );
 
         updates.push({ type, timestamp: updTimestamp, name });
@@ -311,7 +313,7 @@ function decode(buf: Uint8Array, knownStrings: string[] = []): DynmapPing {
 
 function readUnsigned(
   buf: Uint8Array,
-  offset: number = 0
+  offset: number = 0,
 ): { num: number; bytes: number; offset: number } {
   let bytes = 0;
 
@@ -378,7 +380,7 @@ function readUnsigned(
 
 function readSigned(
   buf: Uint8Array | Uint8Array,
-  offset: number = 0
+  offset: number = 0,
 ): { num: number; bytes: number; offset: number } {
   const result = readUnsigned(buf, offset);
   const num = result.num;
@@ -388,7 +390,7 @@ function readSigned(
 
 function readLpString(
   buf: Uint8Array,
-  offset: number = 0
+  offset: number = 0,
 ): { str: string; bytes: number; offset: number } {
   let strLength: number;
   let bytes: number;

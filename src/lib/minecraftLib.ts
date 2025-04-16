@@ -27,6 +27,8 @@ export function calcSpeedFactor(transfer: Map.Transfer): number {
   }
 }
 
-export function assembleDynmapLink(coordinates: Navigation.Coordinates): string {
+export function assembleDynmapLink(
+  coordinates: Navigation.Coordinates,
+): string {
   return "https://ultravanilla.world/#Z1," + coordinates.join(",");
 }

@@ -23,7 +23,7 @@
           x,
           z,
           subtext: details.methodNames.join(" / "),
-					url: "/station?station=" + dest
+          url: "/station?station=" + dest,
         } as Map.Marker;
       }
     }
@@ -69,7 +69,10 @@
       <div class="blurry-box shadow-2xl mb-5">
         <h1 class="text-2xl font-bold">{stationString}</h1>
         <p><strong>Type:</strong> {station.type}</p>
-        <a href={assembleDynmapLink(station.coordinates)} class="text-blue-900"><strong>Coordinates:</strong> {station.coordinates.join(", ")}</a>
+        <a href={assembleDynmapLink(station.coordinates)} class="text-blue-900">
+          <strong>Coordinates:</strong>
+          {station.coordinates.join(", ")}
+        </a>
       </div>
       <div class="blurry-box shadow-2xl mb-6">
         <Map
@@ -78,7 +81,7 @@
           x2={boundings.endX}
           z2={boundings.endZ}
           markers={markers.toReversed()}
-					lines={listLines(station).toArray()}
+          lines={listLines(station).toArray()}
         />
       </div>
     </div>

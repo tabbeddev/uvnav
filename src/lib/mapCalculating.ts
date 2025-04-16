@@ -4,7 +4,7 @@ export function calculateDeltaMap(
   startX: number,
   startZ: number,
   endX: number,
-  endZ: number
+  endZ: number,
 ): {
   dx: number;
   dz: number;
@@ -39,7 +39,7 @@ type Boundings = {
 };
 
 export function calculateMapBounding(
-  paths: Navigation.NavigationResult["path"]
+  paths: Navigation.NavigationResult["path"],
 ): Boundings {
   const coordsX = paths.map((plc) => network.places[plc].coordinates[0]);
   const coordsZ = paths.map((plc) => network.places[plc].coordinates[1]);
@@ -47,7 +47,7 @@ export function calculateMapBounding(
 }
 
 export function calculateMapBoundingByMarkers(
-  markers: Map.Marker[]
+  markers: Map.Marker[],
 ): Boundings {
   const coordsX = markers.map((mk) => mk.x);
   const coordsZ = markers.map((mk) => mk.z);

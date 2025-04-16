@@ -5,10 +5,8 @@ export function secondStringify(e: number): string {
   let o;
   return (
     (o = 1 == t ? "1 minute" : Math.round(t) + " minutes"),
-    n > 0
-      ? 1 == n
-        ? o + " 1 second"
-        : o + " " + Math.round(n) + " seconds"
-      : o
+      n > 0
+        ? 1 == n ? o + " 1 second" : o + " " + Math.round(n) + " seconds"
+        : o
   );
 }

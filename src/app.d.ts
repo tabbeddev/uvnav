@@ -65,14 +65,14 @@ declare global {
     interface NavigationResult {
       path: string[];
       totalDistance: number;
-			totalTime: number;
+      totalTime: number;
       steps: {
         from: string;
         to: string;
         transfer: Map.Transfer;
         methodNames: string[];
         distance: number;
-				time: number;
+        time: number;
       }[];
     }
 

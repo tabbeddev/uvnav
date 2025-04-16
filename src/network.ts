@@ -127,9 +127,9 @@ const network: Navigation.Network = {
         street: {
           "La Cueva": { distance: 200, methodNames: ["UV-OP-2"] },
         },
-				railway: {
-					"Pagasa City": {distance: 2000, methodNames: ["UltraStar 2"]}
-				}
+        railway: {
+          "Pagasa City": { distance: 2000, methodNames: ["UltraStar 2"] },
+        },
       },
       type: "Town",
     },
@@ -247,9 +247,9 @@ const network: Navigation.Network = {
           Seacrestica: { distance: 2100, methodNames: ["UltraStar 2"] },
           Illyria: { distance: 2000, methodNames: ["UltraStar 1"] },
         },
-				iceway: {
+        iceway: {
           "La Cueva": { distance: 2000, methodNames: ["OPE Quest"] },
-				}
+        },
       },
       type: "Town",
     },
@@ -486,6 +486,9 @@ const network: Navigation.Network = {
     ["UltraStar 3", "UltraStar 4"],
     ["UltraStar Express 1", "UltraStar Express 2"],
     ["OPE Nord"],
+    ["OPE Quest"],
+    ["OPE Est"],
+    ["OPE Sud"],
     ["UV-OP-1"],
     ["UV-OP-2"],
     ["UV-VY"],

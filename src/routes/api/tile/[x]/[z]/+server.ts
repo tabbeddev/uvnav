@@ -19,9 +19,11 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
   const zoom = 5;
 
   const res = await fetch(
-    `https://ultravanilla.world/tiles/world/flat/${chunkX}_${chunkZ}/${"z".repeat(
-      zoom
-    )}_${tileX}_${tileZ}.png`
+    `https://ultravanilla.world/tiles/world/flat/${chunkX}_${chunkZ}/${
+      "z".repeat(
+        zoom,
+      )
+    }_${tileX}_${tileZ}.png`,
   );
 
   if (!res.ok) {
